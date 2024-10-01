@@ -9,22 +9,16 @@ public class PlayerControl : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private float jumpForce;
     [SerializeField] private float moveSpeed;
-    [SerializeField] private Collider2D standCol;
-    [SerializeField] private Collider2D slidCol;
+    [SerializeField] private CharSwitcher charSwitcher;
+  
     private PlayableCharacter activeChar;
-    private Animator anim;
-
-    //private bool isJumping;
-    //private bool isSliding;
+   
 
     
     // Start is called before the first frame update
     void Start()
     {
-        activeChar = GetComponent<PlayableCharacter>();
-        //rb = GetComponent<Rigidbody2D>();
-        //anim = GetComponent<Animator>();
-       
+        activeChar = charSwitcher.SetRandomCharacter();
     }
 
     // Update is called once per frame
@@ -43,35 +37,6 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    //private void Slide()
-    //{
-    //    if (isSliding)
-    //    {
-    //        anim.SetBool("isSliding", true);
-    //        standCol.enabled = false;
-    //        slidCol.enabled = true;
-    //        isSliding = false;
-    //    }
-    //    else
-    //    {
-    //        standCol.enabled = true;
-    //        slidCol.enabled = false;
-    //        anim.SetBool("isSliding", false);
-    //    }
-    //}
-
-    //private void Jump()
-    //{
-    //    if (isJumping)
-    //    {
-    //        rb.velocity = Vector2.up * jumpForce;
-    //        anim.SetBool("isJumping", true);
-    //    }
-    //    //add something to check when player is touching the ground
-    //    isJumping = false;
-    //    anim.SetBool("isJumping", false);
-    //}
-
     private void ProcessInputs()
     {
         if(Input.GetKeyDown("up"))
@@ -81,6 +46,14 @@ public class PlayerControl : MonoBehaviour
         if(Input.GetKey("down"))
         {
             activeChar.isSliding = true;
+        }
+        if(Input.GetKeyDown("right"))
+        {
+            activeChar = charSwitcher.SwitchChar("right");
+        }
+        if(Input.GetKeyDown("left"))
+        {
+            activeChar = charSwitcher.SwitchChar("left");
         }
     }
 }

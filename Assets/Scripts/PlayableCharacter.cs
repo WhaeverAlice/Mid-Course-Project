@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PlayableCharacter : MonoBehaviour
+public abstract class PlayableCharacter : MonoBehaviour, IDamageable
 {
     //private int speed;
     private int maxHP;
@@ -61,8 +61,10 @@ public abstract class PlayableCharacter : MonoBehaviour
 
     private void Die()
     {
+        //add if for when its the last char to do dying animation instead of inactive and to trigger game over
+        
         gameObject.SetActive(false);
         dead = true;
-        //add dying animation
+        
     }
 }
