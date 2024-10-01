@@ -20,6 +20,7 @@ public abstract class PlayableCharacter : MonoBehaviour
     public void Move(float jumpForce, float moveSpeed)
     {
         transform.position += Vector3.right * moveSpeed * Time.fixedDeltaTime;
+        anim.SetBool("isJumping", false);
         Jump(jumpForce);
         Slide(isSliding);
     }
@@ -50,7 +51,6 @@ public abstract class PlayableCharacter : MonoBehaviour
         }
         //add something to check when player is touching the ground
         isJumping = false;
-        anim.SetBool("isJumping", false);
     }
 
     public void ApplyDamage()
