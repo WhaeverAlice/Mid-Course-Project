@@ -10,11 +10,8 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float moveSpeed;
     [SerializeField] private CharSwitcher charSwitcher;
-  
     private PlayableCharacter activeChar;
    
-
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -42,10 +39,6 @@ public class PlayerControl : MonoBehaviour
         if(Input.GetKeyDown("up"))
         {
             activeChar.isJumping = true;
-        }
-        if(Input.GetKey("down"))
-        {
-            activeChar.isSliding = true;
         }
         if(Input.GetKeyDown("right"))
         {

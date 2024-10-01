@@ -25,15 +25,19 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable
         Slide(isSliding);
     }
 
+    public abstract void OnCollisonEnter2D(Collider2D collider);
+    public abstract void OnTriggerEnter2D(Collider2D col);
+    
+
     public virtual void Slide(bool slide)
     {
-        if (isSliding)
+        if (Input.GetKey("down"))
         {
             anim.SetBool("isSliding", true);
             standCol.enabled = false;
             slidCol.enabled = true;
-            isSliding = false;
         }
+
         else
         {
             standCol.enabled = true;
@@ -57,12 +61,19 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable
     {
         currentHP--;
         if (currentHP <= 0) Die();
+        //add taking hit animation
+
+        //add somethin g to make character knockback from hit
+
+        //add something to make haracter invinsible for a couple of seconds
     }
 
     private void Die()
     {
+        //add if for when char dies to force a switch to other char
+
         //add if for when its the last char to do dying animation instead of inactive and to trigger game over
-        
+
         gameObject.SetActive(false);
         dead = true;
         
