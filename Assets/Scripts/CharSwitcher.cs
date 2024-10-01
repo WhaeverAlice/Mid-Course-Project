@@ -17,30 +17,23 @@ public class CharSwitcher : MonoBehaviour
             case "right":
                 if (currentActive == characters.Length - 1) currentActive = 0;
                 else currentActive++;
-                for (int i = 0; i < characters.Length; i++)
-                {
-                    if (i == currentActive)
-                    {
-                        characters[i].SetActive(true);
-                        activeChar = characters[i].GetComponent<PlayableCharacter>();
-                    }
-                    else characters[i].SetActive(false);
-                }
                 break;
                
             case "left":
                 if (currentActive == 0) currentActive = 2;
                 else currentActive--;
-                for (int i = 0; i < characters.Length; i++)
-                {
-                    if (i == currentActive)
-                    {
-                        characters[i].SetActive(true);
-                        activeChar = characters[i].GetComponent<PlayableCharacter>();
-                    }
-                    else characters[i].SetActive(false);
-                }
                 break;
+        }
+
+        for (int i = 0; i < characters.Length; i++)
+        {
+            if (i == currentActive)
+            {
+                characters[i].transform.position = activeChar.transform.position;
+                characters[i].SetActive(true);
+                activeChar = characters[i].GetComponent<PlayableCharacter>();
+            }
+            else characters[i].SetActive(false);
         }
         return activeChar;
     }
@@ -51,5 +44,11 @@ public class CharSwitcher : MonoBehaviour
         character.SetActive(true);
         activeChar = character.GetComponent<PlayableCharacter>();
         return activeChar;
+    }
+
+    public GameObject GetActiveCharacter()
+    {
+        GameObject character = activeChar.gameObject;
+        return character;
     }
 }
