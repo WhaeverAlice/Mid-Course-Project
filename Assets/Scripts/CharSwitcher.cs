@@ -39,6 +39,7 @@ public class CharSwitcher : MonoBehaviour
                     characters[i].transform.position = activeChar.transform.position;
                     characters[i].SetActive(true);
                     activeChar = characters[i].GetComponent<PlayableCharacter>();
+                    activeChar.BecomeInvulnerable(); //charater get damage when switched
                 }
             }
             else characters[i].SetActive(false);
@@ -48,6 +49,10 @@ public class CharSwitcher : MonoBehaviour
 
     public void SetRandomCharacter()
     {
+        foreach (GameObject chara in characters)
+        {
+            chara.SetActive(false);
+        }
         GameObject character = characters[Random.Range(0, characters.Length)];
         character.SetActive(true);
         activeChar = character.GetComponent<PlayableCharacter>();

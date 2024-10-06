@@ -40,6 +40,12 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
         score += byThisMuch;
     }
 
+    public string GetScore()
+    {
+        string currentScore = score.ToString();
+        return currentScore;
+    }
+
     public virtual void Slide()
     {
         if (isSliding)
@@ -80,13 +86,13 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
         rb.velocity = Vector3.zero;
     }
 
-    private IEnumerator BecomeInvulnerable()
+    public IEnumerator BecomeInvulnerable()
     {
         isInvulnerable = true;
         Physics2D.IgnoreLayerCollision(11, 7, true); //ignore collison between player and traps
         //rbSprite.material.color = Color.white; //change sprite color to white to indicate hit
         Debug.Log("invincible on");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         Physics2D.IgnoreLayerCollision(11, 7, false); //return collison between player and traps
         isInvulnerable = false;
         Debug.Log("invincible off");
@@ -124,12 +130,6 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
         //add taking hit animation
         anim.SetTrigger("playerHit");
         StartCoroutine(WaitForAnimation());
-
-        //add somehting that tells the UI to show one less heart
-
-       
-
-       
     }
     public void Die()
     {
