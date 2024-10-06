@@ -7,10 +7,11 @@ using UnityEngine.TextCore.Text;
 public class CharSwitcher : MonoBehaviour
 {
     [SerializeField] private GameObject[] characters;
-    private PlayableCharacter activeChar;
+    public PlayableCharacter activeChar;
     int currentActive = 0;
+    public int avialableChars = 3;
 
-    public PlayableCharacter SwitchChar(string dir)
+    public void SwitchChar(string dir)
     {
         switch (dir)
         {
@@ -29,21 +30,28 @@ public class CharSwitcher : MonoBehaviour
         {
             if (i == currentActive)
             {
-                characters[i].transform.position = activeChar.transform.position;
-                characters[i].SetActive(true);
-                activeChar = characters[i].GetComponent<PlayableCharacter>();
+                if (characters[i].GetComponent<PlayableCharacter>().dead)
+                {
+                    SwitchChar(dir);
+                }
+                else 
+                {
+                    characters[i].transform.position = activeChar.transform.position;
+                    characters[i].SetActive(true);
+                    activeChar = characters[i].GetComponent<PlayableCharacter>();
+                }
             }
             else characters[i].SetActive(false);
         }
-        return activeChar;
+       // return activeChar;
     }
 
-    public PlayableCharacter SetRandomCharacter()
+    public void SetRandomCharacter()
     {
         GameObject character = characters[Random.Range(0, characters.Length)];
         character.SetActive(true);
         activeChar = character.GetComponent<PlayableCharacter>();
-        return activeChar;
+       // return activeChar;
     }
 
     public GameObject GetActiveCharacter()

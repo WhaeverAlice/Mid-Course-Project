@@ -4170,6 +4170,10 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 352092487038028894, guid: e9b3c64bbd4e57e44a6034d432f8afc5, type: 3}
+      propertyPath: characterSwitcher
+      value: 
+      objectReference: {fileID: 1107490467}
+    - target: {fileID: 352092487038028894, guid: e9b3c64bbd4e57e44a6034d432f8afc5, type: 3}
       propertyPath: knockbackStrength
       value: 10
       objectReference: {fileID: 0}
@@ -4181,6 +4185,10 @@ PrefabInstance:
       propertyPath: lanes.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 780373887364390148, guid: e9b3c64bbd4e57e44a6034d432f8afc5, type: 3}
+      propertyPath: characterSwitcher
+      value: 
+      objectReference: {fileID: 1107490467}
     - target: {fileID: 780373887364390148, guid: e9b3c64bbd4e57e44a6034d432f8afc5, type: 3}
       propertyPath: knockbackStrength
       value: 10
@@ -4285,6 +4293,10 @@ PrefabInstance:
       propertyPath: knockbackDelay
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8582576237748320597, guid: e9b3c64bbd4e57e44a6034d432f8afc5, type: 3}
+      propertyPath: characterSwitcher
+      value: 
+      objectReference: {fileID: 1107490467}
     - target: {fileID: 8582576237748320597, guid: e9b3c64bbd4e57e44a6034d432f8afc5, type: 3}
       propertyPath: knockbackStrength
       value: 10

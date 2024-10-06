@@ -15,7 +15,8 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        activeChar = charSwitcher.SetRandomCharacter();
+      charSwitcher.SetRandomCharacter();
+      //activeChar = charSwitcher.activeChar;
     }
 
     // Update is called once per frame
@@ -26,41 +27,36 @@ public class PlayerControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        activeChar.Move(jumpForce, moveSpeed);
-
-        
+        charSwitcher.activeChar.Move(jumpForce, moveSpeed);
     }
 
     private void ProcessInputs()
     {
         if(Input.GetKeyDown("up"))
         {
-            activeChar.isJumping = true;
+            charSwitcher.activeChar.isJumping = true;
         }
-        //if(Input.GetKey("down"))
-        //{
-        //    activeChar.isSliding = true;
-        //}
-
-        if (activeChar.canJumpAndSlide && Input.GetKey("down"))
+        if (charSwitcher.activeChar.canJumpAndSlide && Input.GetKey("down"))
         {
-            activeChar.isSliding = true;
+            charSwitcher.activeChar.isSliding = true;
         }
-        if (!activeChar.canJumpAndSlide && Input.GetKeyDown("down"))
+        if (!charSwitcher.activeChar.canJumpAndSlide && Input.GetKeyDown("down"))
         {
-            activeChar.isSliding = true;
+            charSwitcher.activeChar.isSliding = true;
         }
         if (Input.GetKeyDown("right"))
         {
-            activeChar = charSwitcher.SwitchChar("right");
+            charSwitcher.SwitchChar("right");
+            //activeChar = charSwitcher.SwitchChar("right");
         }
         if(Input.GetKeyDown("left"))
         {
-            activeChar = charSwitcher.SwitchChar("left");
+            charSwitcher.SwitchChar("left");
+            //activeChar = charSwitcher.SwitchChar("left");
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            activeChar.SpecialAbility();
+            charSwitcher.activeChar.SpecialAbility();
         }
     }
 }

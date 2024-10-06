@@ -7,8 +7,9 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
     //private int speed;
     protected int maxHP = 3;
     public int currentHP { get; protected set; }
-    public bool dead { get; protected set; } = false;
+    public bool dead = false;
     public Rigidbody2D rb;
+    [SerializeField] CharSwitcher characterSwitcher;
     [SerializeField] private Collider2D standCol;
     [SerializeField] private Collider2D slidCol;
     [SerializeField] private float knockbackStrength;
@@ -33,9 +34,6 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
         Jump(jumpForce);
         Slide();
     }
-
-    //public abstract void OnCollisonEnter2D(Collider2D collider);
-    //public abstract void OnTriggerEnter2D(Collider2D col);
 
     public void IncreaseScore(int byThisMuch)
     {
@@ -135,14 +133,21 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
     }
     public void Die()
     {
-        //add if for when char dies to force a switch to other char
-
-        //add if for when its the last char to do dying animation instead of inactive and to trigger game over
+        dead = true;
+        characterSwitcher.avialableChars--;
 
         //make player stop
         rb.velocity = Vector3.zero;
 
-        gameObject.SetActive(false);
-        dead = true;
+        if (characterSwitcher.avialableChars <= 0)
+        {
+            anim.SetBool("isDying", true);
+        }
+
+        else
+        {
+            //force a switch to another char thats alive
+            characterSwitcher.SwitchChar("right");
+        }
     }
 }
