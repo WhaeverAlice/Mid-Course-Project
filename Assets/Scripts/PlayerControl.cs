@@ -28,10 +28,7 @@ public class PlayerControl : MonoBehaviour
     {
         activeChar.Move(jumpForce, moveSpeed);
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            activeChar.SpecialAbility();
-        }
+        
     }
 
     private void ProcessInputs()
@@ -40,13 +37,30 @@ public class PlayerControl : MonoBehaviour
         {
             activeChar.isJumping = true;
         }
-        if(Input.GetKeyDown("right"))
+        //if(Input.GetKey("down"))
+        //{
+        //    activeChar.isSliding = true;
+        //}
+
+        if (activeChar.canJumpAndSlide && Input.GetKey("down"))
+        {
+            activeChar.isSliding = true;
+        }
+        if (!activeChar.canJumpAndSlide && Input.GetKeyDown("down"))
+        {
+            activeChar.isSliding = true;
+        }
+        if (Input.GetKeyDown("right"))
         {
             activeChar = charSwitcher.SwitchChar("right");
         }
         if(Input.GetKeyDown("left"))
         {
             activeChar = charSwitcher.SwitchChar("left");
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            activeChar.SpecialAbility();
         }
     }
 }

@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - RegularTrap
+  - WallTrap
+  - FireTrap
+  - ProjectileTrap
+  - RollPlayer
+  - TeleportPlayer
+  - BashPlayer
   layers:
   - Default
   - TransparentFX
@@ -13,10 +20,10 @@ TagManager:
   - UI
   - Ground
   - Traps
+  - 
+  - 
+  - 
   - Player
-  - 
-  - 
-  - 
   - 
   - 
   - 

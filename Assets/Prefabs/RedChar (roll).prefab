@@ -79,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 6
   m_Sprite: {fileID: -2056860125, guid: a0885bd3b1e3fbf41b5ec4e38371e876, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -195,8 +195,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.06001065, y: -0.12513243}
-  m_Size: {x: 1.701789, y: 1.2418786}
+  m_Offset: {x: 0.051667456, y: -0.3836883}
+  m_Size: {x: 1.0621793, y: 0.7247983}
   m_Direction: 1
 --- !u!95 &165614175809509824
 Animator:
@@ -231,6 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca3b93e31338a384683f7d313ae0c1fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHP: 0
   dead: 0
   rb: {fileID: 0}
   standCol: {fileID: 3440258391086754720}
@@ -238,6 +239,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   isJumping: 0
   isSliding: 0
+  canJumpAndSlide: 1
 --- !u!1 &8553183875502601256
 GameObject:
   m_ObjectHideFlags: 0

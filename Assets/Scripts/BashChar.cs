@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class BashChar : PlayableCharacter
 {
@@ -8,21 +9,40 @@ public class BashChar : PlayableCharacter
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        currentHP = maxHP;
     }
 
-    public override void OnCollisonEnter2D(Collider2D collider)
-    {
-        throw new System.NotImplementedException();
-    }
+    //public override void OnCollisonEnter2D(Collider2D collider)
+    //{
+    //    return;
+    //}
 
-    public override void OnTriggerEnter2D(Collider2D col)
-    {
-        throw new System.NotImplementedException();
-    }
+    //public override void OnTriggerEnter2D(Collider2D col) 
+    //{
+    //    //destroy wall traps if active ability on
+    //    if (abilityActive && col.CompareTag("WallTrap"))
+    //    {
+    //        //method for destroying trap (animation and destroy?)
 
-    public override void SpecialAbility()
+    //        //extra score for destroying traps
+    //        score += 500;
+    //    }
+    //    else //take damage from all other traps or if ability off
+    //    {
+    //        //apply damage to char
+    //        this.ApplyDamage();
+    //    }
+    //}
+
+    public override void SpecialAbility() //might not need an override method - if all animations are called the special ability....
     {
-        //throw new System.NotImplementedException();
-        Debug.Log("need to implement special ability : break wall");
+        //play ability animation
+        anim.SetTrigger("abilityActive");
+
+        //set active ability on
+        abilityActive = true;
+
+        //wait for animation of ability to end
+        WaitForAnimation();
     }
 }
