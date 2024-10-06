@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
 {
     //private int speed;
-    protected int maxHP = 10;
+    protected int maxHP = 3;
     public int currentHP { get; protected set; }
     public bool dead { get; protected set; } = false;
     public Rigidbody2D rb;
@@ -19,6 +19,7 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
     public static int score { get; protected set; } = 0;
     public bool canJumpAndSlide { get; protected set; } = true;
     public bool abilityActive = false;
+    public bool isInvulnerable = false;
 
     public abstract void SpecialAbility();
 
@@ -62,31 +63,35 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
 
     public void ApplyKnockback()
     {
-        StopAllCoroutines();
+        //StopAllCoroutines();
+        //new Vector3(transform.position.x + 1, transform.position.y, transform.position.z)
         Vector2 direction = (-transform.position).normalized;
         rb.AddForce(direction * knockbackStrength, ForceMode2D.Impulse);
         RecoverFromKnockback();
-        //StartCoroutine("Recover");
+        StartCoroutine(RecoverFromKnockback());
     }
 
-    public IEnumerable WaitForAnimation() //waits for animation transition to end
+    public IEnumerator WaitForAnimation() //waits for animation transition to end
     {
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f);
     }
 
-    private IEnumerable RecoverFromKnockback()
+    private IEnumerator RecoverFromKnockback()
     {
         yield return new WaitForSeconds(knockbackDelay);
         rb.velocity = Vector3.zero;
     }
 
-    private IEnumerable BecomeInvulnerable()
+    private IEnumerator BecomeInvulnerable()
     {
+        isInvulnerable = true;
         Physics2D.IgnoreLayerCollision(11, 7, true); //ignore collison between player and traps
         //rbSprite.material.color = Color.white; //change sprite color to white to indicate hit
-        yield return new WaitForSeconds(5f);
+        Debug.Log("invincible on");
+        yield return new WaitForSeconds(1f);
         Physics2D.IgnoreLayerCollision(11, 7, false); //return collison between player and traps
-
+        isInvulnerable = false;
+        Debug.Log("invincible off");
 
     }
     public virtual void Jump(float jumpForce)
@@ -101,12 +106,18 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
     }
     public void ApplyDamage()
     {
+        if(isInvulnerable) 
+        {
+        return;
+        }
+        //add something to make haracter invinsible for a couple of seconds
+        StartCoroutine(BecomeInvulnerable());
+
         //add something to make character knockback from hit
         ApplyKnockback();
-
-        //add something to make haracter invinsible for a couple of seconds
-        BecomeInvulnerable(); 
-        currentHP--;
+        
+        currentHP -= 1;
+        Debug.Log("damage taken");
         if (currentHP <= 0)
         {
             Die();
@@ -114,7 +125,7 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
 
         //add taking hit animation
         anim.SetTrigger("playerHit");
-        WaitForAnimation();
+        StartCoroutine(WaitForAnimation());
 
         //add somehting that tells the UI to show one less heart
 

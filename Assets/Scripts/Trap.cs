@@ -34,7 +34,7 @@ public class Trap : MonoBehaviour, IDamageable, IAnimated
         
     }
 
-    public IEnumerable WaitForAnimation()//waits for animation to end
+    public IEnumerator WaitForAnimation()//waits for animation to end
     {
         yield return new WaitWhile(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f);
     }

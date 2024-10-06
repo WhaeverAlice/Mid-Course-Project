@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IAnimated
 {
-    public IEnumerable WaitForAnimation();
+    public IEnumerator WaitForAnimation();
 }
