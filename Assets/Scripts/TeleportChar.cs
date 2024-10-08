@@ -9,13 +9,18 @@ public class TeleportChar : PlayableCharacter
     private int currentLane = 1;
     [SerializeField] private Transform[] lanes;
 
-    public void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        currentHP = maxHP;
-        canJumpAndSlide = false;
-    }
+    //public void Awake()
+    //{
+    //    rb = GetComponent<Rigidbody2D>();
+    //    anim = GetComponent<Animator>();
+    //    currentHP = maxHP;
+    //    canJumpAndSlide = false;
+    //}
+
+    //void FixedUpdate()
+    //{
+    //    if (!dead) score += 1;
+    //}
     public override void SpecialAbility()
     {
         //jump replaces special ability - maybe add a random teleport or a teleport projectiles

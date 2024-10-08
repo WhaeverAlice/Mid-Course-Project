@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class RollChar : PlayableCharacter
 {
-    public void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        currentHP = maxHP;
-    }
+    //public void Awake()
+    //{
+    //    rb = GetComponent<Rigidbody2D>();
+    //    anim = GetComponent<Animator>();
+    //    currentHP = maxHP;
+    //}
+
+    //void FixedUpdate()
+    //{
+    //    score += 1;
+    //    Debug.Log("roll char increase");
+    //}
 
     //public override void OnCollisonEnter2D(Collider2D collider)
     //{

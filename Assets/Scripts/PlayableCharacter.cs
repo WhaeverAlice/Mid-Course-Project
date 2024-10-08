@@ -21,6 +21,18 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
     public bool canJumpAndSlide { get; protected set; } = true;
     public bool abilityActive = false;
     public bool isInvulnerable = false;
+    public bool isTouchingTrap = false;
+
+    public void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        currentHP = maxHP;
+    }
+    void FixedUpdate()
+    {
+        if (!dead) score += 1;
+    }
 
     public abstract void SpecialAbility();
 
@@ -91,11 +103,11 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
         isInvulnerable = true;
         Physics2D.IgnoreLayerCollision(11, 7, true); //ignore collison between player and traps
         //rbSprite.material.color = Color.white; //change sprite color to white to indicate hit
-        Debug.Log("invincible on");
-        yield return new WaitForSeconds(3f);
+        //Debug.Log("invincible on");
+        yield return new WaitForSeconds(2f);
         Physics2D.IgnoreLayerCollision(11, 7, false); //return collison between player and traps
         isInvulnerable = false;
-        Debug.Log("invincible off");
+        //Debug.Log("invincible off");
 
     }
     public virtual void Jump(float jumpForce)
@@ -121,33 +133,44 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
         ApplyKnockback();
         
         currentHP -= 1;
-        Debug.Log("damage taken");
+        //Debug.Log($"Damage take. current hp: {currentHP}");
         if (currentHP <= 0)
         {
             Die();
         }
-
-        //add taking hit animation
-        anim.SetTrigger("playerHit");
-        StartCoroutine(WaitForAnimation());
+        else
+        {
+            //add taking hit animation
+            anim.SetTrigger("playerHit");
+            StartCoroutine(WaitForAnimation());
+        }
     }
     public void Die()
     {
         dead = true;
         characterSwitcher.avialableChars--;
 
-        //make player stop
-        rb.velocity = Vector3.zero;
+        
 
         if (characterSwitcher.avialableChars <= 0)
         {
-            anim.SetBool("isDying", true);
+
+            //make player stop
+            rb.velocity = Vector3.zero; anim.SetBool("isDying", true);
         }
 
         else
         {
             //force a switch to another char thats alive
-            characterSwitcher.SwitchChar("right");
+            StartCoroutine(ForceSwitch());
+            //Debug.Log("switch triggered");
+            //characterSwitcher.SwitchChar("right");
         }
+    }
+
+    public IEnumerator ForceSwitch()
+    {
+        yield return new WaitForSeconds(knockbackDelay);
+        characterSwitcher.SwitchChar("right");
     }
 }

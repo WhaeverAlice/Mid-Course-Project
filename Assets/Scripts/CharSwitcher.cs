@@ -8,7 +8,7 @@ public class CharSwitcher : MonoBehaviour
 {
     [SerializeField] private GameObject[] characters;
     public PlayableCharacter activeChar;
-    int currentActive = 0;
+    int currentActive = 1;
     public int avialableChars = 3;
 
     public void SwitchChar(string dir)
@@ -38,8 +38,12 @@ public class CharSwitcher : MonoBehaviour
                 {
                     characters[i].transform.position = activeChar.transform.position;
                     characters[i].SetActive(true);
+                    //Debug.Log("character set active");
                     activeChar = characters[i].GetComponent<PlayableCharacter>();
-                    activeChar.BecomeInvulnerable(); //charater get damage when switched
+                    Physics2D.IgnoreLayerCollision(11, 7, false); //return collison between player and traps
+                    activeChar.isInvulnerable = false;
+                    //activeChar.BecomeInvulnerable(); //charater get damage when switched
+                    //Debug.Log("switched character supposed to be invulnerabel");
                 }
             }
             else characters[i].SetActive(false);
