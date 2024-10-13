@@ -14,8 +14,13 @@ public class TeleportChar : PlayableCharacter
     //    rb = GetComponent<Rigidbody2D>();
     //    anim = GetComponent<Animator>();
     //    currentHP = maxHP;
-    //    canJumpAndSlide = false;
+    //   
     //}
+
+    void Start()
+    {
+        canJumpAndSlide = false;
+    }
 
     //void FixedUpdate()
     //{
@@ -31,7 +36,10 @@ public class TeleportChar : PlayableCharacter
         if(isJumping) 
         {
             //teleports player to the lane above them if its exists
-            
+            //play ability animation
+            anim.SetTrigger("abilityActive");
+
+
             if (currentLane == 0) currentLane = 2;
             else currentLane--;
             if (currentLane == 2) return;
@@ -64,13 +72,15 @@ public class TeleportChar : PlayableCharacter
                 if (i == currentLane)
                 {
                     transform.position = new Vector3(transform.position.x, lanes[i].transform.position.y, transform.position.z);
-                    //add animation for teleporting
-                    isSliding = false;
+                    //play ability animation
+                    anim.SetTrigger("abilityActive");
+                    
                     break;
                 }
                 else continue;
             } 
         }
+        isSliding = false;
     }
 
     //public override void OnCollisonEnter2D(Collider2D collider)

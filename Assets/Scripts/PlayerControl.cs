@@ -47,12 +47,10 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKeyDown("right"))
         {
             charSwitcher.SwitchChar("right");
-            //activeChar = charSwitcher.SwitchChar("right");
         }
         if(Input.GetKeyDown("left"))
         {
             charSwitcher.SwitchChar("left");
-            //activeChar = charSwitcher.SwitchChar("left");
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
