@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WallTrap : Trap
 {
+    [SerializeField] GameObject _particleSystem;
     private void Awake()
     {
         trigger = GetComponent<Collider2D>();
@@ -18,6 +19,7 @@ public class WallTrap : Trap
             player.abilityActive = false;
             //method for destroying trap (animation and destroy?)
             this.ApplyDamage();
+            _particleSystem.SetActive(true);
 
             //extra score for destroying traps
             player.IncreaseScore(500);

@@ -31,7 +31,7 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
     }
     void FixedUpdate()
     {
-        if (!dead) score += 1;
+        //if (!dead) score += 1;
     }
 
     public abstract void SpecialAbility();

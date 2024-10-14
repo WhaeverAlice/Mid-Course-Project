@@ -45,6 +45,7 @@ public class Trap : MonoBehaviour, IDamageable, IAnimated
 
         //destroy object or set inactive?
         Destroy(this.gameObject);
+
         
     }
 
