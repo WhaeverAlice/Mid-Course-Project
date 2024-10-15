@@ -19,14 +19,12 @@ public class Trap : MonoBehaviour, IDamageable, IAnimated
     {
         PlayableCharacter player = collision.gameObject.GetComponent<PlayableCharacter>();
         player.isTouchingTrap = true;
-        Debug.Log("Player is touching trap collider");
     }
 
     public void OnTriggerExit2D(Collider2D collision)
     {
         PlayableCharacter player = collision.gameObject.GetComponent<PlayableCharacter>();
         player.isTouchingTrap = false;
-        Debug.Log("Player exited trap collider");
     }
 
     public void ApplyDamage()

@@ -15,7 +15,6 @@ public class WallTrap : Trap
         //destroy trap if correct active ability on
         if (player.abilityActive && other.CompareTag("BashPlayer"))
         {
-            Debug.Log("player tag detected, and ability activated");
             player.abilityActive = false;
             //method for destroying trap (animation and destroy?)
             this.ApplyDamage();
