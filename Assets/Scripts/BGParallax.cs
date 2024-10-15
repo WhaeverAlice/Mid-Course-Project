@@ -11,7 +11,6 @@ public class BGParallax : MonoBehaviour
     void Start()
     {
         startPos = transform.position.x;
-        //length = GetComponent<SpriteRenderer>().bounds.size.x;
         length = GetComponentInChildren<SpriteRenderer>().bounds.size.x;
     }
 

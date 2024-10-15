@@ -11,6 +11,11 @@ TagManager:
   - RollPlayer
   - TeleportPlayer
   - BashPlayer
+  - FxTemporaire
+  - LongBlock
+  - MediumBlock
+  - ShortBlock
+  - Block
   layers:
   - Default
   - TransparentFX

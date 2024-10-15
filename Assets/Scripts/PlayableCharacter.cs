@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
 {
@@ -9,12 +10,14 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
     public int currentHP { get; protected set; }
     public bool dead = false;
     public Rigidbody2D rb;
+    private SpriteRenderer rbSprite;
     [SerializeField] CharSwitcher characterSwitcher;
     [SerializeField] private Collider2D standCol;
     [SerializeField] private Collider2D slidCol;
     [SerializeField] private float knockbackStrength;
     [SerializeField] private float knockbackDelay;
     public Animator anim;
+    private Color spriteColor;
     public bool isJumping = false;
     public bool isSliding = false;
     public static int score { get; protected set; } = 0;
@@ -27,11 +30,22 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        rbSprite = GetComponent<SpriteRenderer>();
+        spriteColor = rbSprite.color;
         currentHP = maxHP;
     }
     void FixedUpdate()
     {
         //if (!dead) score += 1;
+        if (isInvulnerable)
+        {
+            spriteColor.a = 0.7f;
+        }
+        else
+        {
+            spriteColor.a = 1f;
+        }
+        rbSprite.color = spriteColor;
     }
 
     public abstract void SpecialAbility();
