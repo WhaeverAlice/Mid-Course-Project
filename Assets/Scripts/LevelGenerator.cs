@@ -42,19 +42,19 @@ public class LevelGenerator : MonoBehaviour
 
     private void Update()
     {
-        if (waterChar.dead)
-        {
-            traps[1] = null;
-        }
-        if (TeleportChar.dead)
-        {
-            traps[5] = null;
-            traps[6] = null;
-        }
-        if (BashChar.dead)
-        {
-            traps[3] = null;
-        }
+        //if (waterChar.dead)
+        //{
+        //    traps[1] = null;
+        //}
+        //if (TeleportChar.dead)
+        //{
+        //    traps[5] = null;
+        //    traps[6] = null;
+        //}
+        //if (BashChar.dead)
+        //{
+        //    traps[3] = null;
+        //}
         
         activeChar = characterSwitcher.activeChar;
         if (Vector3.Distance(activeChar.transform.position, lastTrapPositionTop) < playerDistSpawnTrap) 
@@ -113,7 +113,7 @@ public class LevelGenerator : MonoBehaviour
             else continue;
         }
 
-        Collider2D[] otherTraps = Physics2D.OverlapAreaAll(chosenTrap.Find("boundsA").position, chosenTrap.Find("boundsB").position, 7);
+        //Collider2D[] otherTraps = Physics2D.OverlapAreaAll(chosenTrap.Find("boundsA").position, chosenTrap.Find("boundsB").position, 7);
         //use overlap circle to see if there are traps in two transforms you set above and bellow the trap and then add at the end to return the index of empty if the length is more than 1?
        
         while (chosenTrap.CompareTag("Block") && blocks.Count > 0 || chosenTrap == null)

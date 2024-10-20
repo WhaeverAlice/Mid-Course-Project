@@ -30,12 +30,12 @@ public class CharSwitcher : MonoBehaviour
         {
             if (i == currentActive)
             {
-                if (characters[i].GetComponent<PlayableCharacter>().dead)
-                {
-                    SwitchChar(dir);
-                }
-                else 
-                {
+                //if (characters[i].GetComponent<PlayableCharacter>().dead)
+                //{
+                //    SwitchChar(dir);
+                //}
+                //else 
+                //{
                     characters[i].transform.position = activeChar.transform.position;
                     characters[i].SetActive(true);
                     //Debug.Log("character set active");
@@ -44,7 +44,7 @@ public class CharSwitcher : MonoBehaviour
                     activeChar.isInvulnerable = false;
                     //activeChar.BecomeInvulnerable(); //charater get damage when switched
                     //Debug.Log("switched character supposed to be invulnerabel");
-                }
+                //}
             }
             else characters[i].SetActive(false);
         }

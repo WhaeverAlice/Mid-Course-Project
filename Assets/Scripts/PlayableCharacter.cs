@@ -5,10 +5,9 @@ using UnityEngine.TextCore.Text;
 
 public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
 {
-    //private int speed;
-    protected int maxHP = 3;
-    public int currentHP { get; protected set; }
-    public bool dead = false;
+    protected static int maxHP = 9;
+    public static int currentHP { get; protected set; }
+    public static bool dead = false;
     public Rigidbody2D rb;
     private SpriteRenderer rbSprite;
     [SerializeField] CharSwitcher characterSwitcher;
@@ -16,11 +15,13 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
     [SerializeField] private Collider2D slidCol;
     [SerializeField] private float knockbackStrength;
     [SerializeField] private float knockbackDelay;
+    [SerializeField] public ScoreTracker scoreTracker;
+    [SerializeField] private GameObject gameOverScreen;
     public Animator anim;
     private Color spriteColor;
     public bool isJumping = false;
     public bool isSliding = false;
-    public static int score { get; protected set; } = 0;
+    //public static int score { get; protected set; } = 0;
     public bool canJumpAndSlide { get; protected set; } = true;
     public bool abilityActive = false;
     public bool isInvulnerable = false;
@@ -36,7 +37,7 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
     }
     void FixedUpdate()
     {
-        //if (!dead) score += 1;
+        if (!dead) scoreTracker.IncreaseScore(1);
         if (isInvulnerable)
         {
             spriteColor.a = 0.7f;
@@ -45,7 +46,7 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
         {
             spriteColor.a = 1f;
         }
-        rbSprite.color = spriteColor;
+        rbSprite.color = spriteColor; 
     }
 
     public abstract void SpecialAbility();
@@ -61,16 +62,16 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
         Slide();
     }
 
-    public void IncreaseScore(int byThisMuch)
-    {
-        score += byThisMuch;
-    }
+    //public void IncreaseScore(int byThisMuch)
+    //{
+    //    score += byThisMuch;
+    //}
 
-    public string GetScore()
-    {
-        string currentScore = score.ToString();
-        return currentScore;
-    }
+    //public string GetScore()
+    //{
+    //    string currentScore = score.ToString();
+    //    return currentScore;
+    //}
 
     public virtual void Slide()
     {
@@ -162,24 +163,26 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
     public void Die()
     {
         dead = true;
-        characterSwitcher.avialableChars--;
+        scoreTracker.UpdateHighScore();
+        gameOverScreen.SetActive(true);
+        //characterSwitcher.avialableChars--;
 
         
 
-        if (characterSwitcher.avialableChars <= 0)
-        {
+       // if (characterSwitcher.avialableChars <= 0)
+       // {
 
             //make player stop
             rb.velocity = Vector3.zero; anim.SetBool("isDying", true);
-        }
+       // }
 
-        else
-        {
-            //force a switch to another char thats alive
-            StartCoroutine(ForceSwitch());
-            //Debug.Log("switch triggered");
-            //characterSwitcher.SwitchChar("right");
-        }
+        //else
+        //{
+        //    //force a switch to another char thats alive
+        //    StartCoroutine(ForceSwitch());
+        //    //Debug.Log("switch triggered");
+        //    //characterSwitcher.SwitchChar("right");
+        //}
     }
 
     public IEnumerator ForceSwitch()

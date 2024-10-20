@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class HealthUI : MonoBehaviour
 {
-    [SerializeField] private PlayableCharacter character;
+    //[SerializeField] private PlayableCharacter character;
     [SerializeField] public Image[] hearts;
     [SerializeField] private Sprite fullHeart;
     [SerializeField] private Sprite emptyHeart;
-    [SerializeField] private Image Icon;
+    //[SerializeField] private Image Icon;
     private Color iconColor;
     
     // Start is called before the first frame update
@@ -20,7 +20,7 @@ public class HealthUI : MonoBehaviour
         {
           hearts[i].sprite = emptyHeart;
         }
-        iconColor = Color.white;
+        //iconColor = Color.white;
     }
 
     // Update is called once per frame
@@ -28,7 +28,7 @@ public class HealthUI : MonoBehaviour
     {
         for (int i = 0; i < hearts.Length; i++) 
         {
-         if(i < character.currentHP)
+         if(i < PlayableCharacter.currentHP)
             {
                 hearts[i].sprite = fullHeart;
             }
@@ -38,14 +38,14 @@ public class HealthUI : MonoBehaviour
             }
         }
         //add portion to gray out player icon when theyre dead
-        if (character.dead)
-        {
-            iconColor.a = 0.1f;
-        }
-        else
-        {
-            iconColor.a = 1f;
-        }
-        Icon.color = iconColor;
+        //if (PlayableCharacter.dead)
+        //{
+        //    iconColor.a = 0.1f;
+        //}
+        //else
+        //{
+        //    iconColor.a = 1f;
+        //}
+        //Icon.color = iconColor;
     }
 }

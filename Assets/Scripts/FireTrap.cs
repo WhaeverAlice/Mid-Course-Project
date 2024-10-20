@@ -22,7 +22,7 @@ public class FireTrap : Trap
             smokeParticles.SetActive(true);
 
             //extra score for destroying traps
-            player.IncreaseScore(500);
+            player.scoreTracker.IncreaseScore(500);
         }
         else //take damage from trap if ability is off
         {
