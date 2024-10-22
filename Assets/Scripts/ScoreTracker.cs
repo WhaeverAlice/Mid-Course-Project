@@ -15,6 +15,7 @@ public class ScoreTracker : MonoBehaviour
 
     void Update()
     {
+        currentScoreText.color = Color.white;
         currentScoreText.text = currentScore.ToString();
         finalScore = currentScore;
     }
@@ -40,5 +41,16 @@ public class ScoreTracker : MonoBehaviour
     public void IncreaseScore(int byThisMuch)
     {
         currentScore += byThisMuch;
+        if (byThisMuch > 1) 
+        {
+        currentScoreText.color = Color.yellow;
+        }
     }
+
+    public void ResetCurrentScore()
+    {
+        currentScore = 0;
+    }
+
+   
 }

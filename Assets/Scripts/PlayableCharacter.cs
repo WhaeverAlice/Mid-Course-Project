@@ -29,12 +29,14 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
 
     public void Awake()
     {
+        //resetCharacters();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         rbSprite = GetComponent<SpriteRenderer>();
         spriteColor = rbSprite.color;
         currentHP = maxHP;
     }
+
     void FixedUpdate()
     {
         if (!dead) scoreTracker.IncreaseScore(1);
@@ -173,7 +175,8 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
        // {
 
             //make player stop
-            rb.velocity = Vector3.zero; anim.SetBool("isDying", true);
+            rb.velocity = Vector3.zero; 
+            anim.SetBool("isDying", true);
        // }
 
         //else
@@ -189,5 +192,11 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
     {
         yield return new WaitForSeconds(knockbackDelay);
         characterSwitcher.SwitchChar("right");
+    }
+
+    public void resetCharacters()
+    {
+        dead = false;
+        scoreTracker.ResetCurrentScore();
     }
 }

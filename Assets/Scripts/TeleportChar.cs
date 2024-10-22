@@ -7,6 +7,9 @@ using UnityEngine.TextCore.Text;
 public class TeleportChar : PlayableCharacter
 {
     private int currentLane = 1;
+    [SerializeField] private Transform above;
+    [SerializeField] private Transform bellow;
+    [SerializeField] private LayerMask blockLayer;
     [SerializeField] private Transform[] lanes;
 
     //public void Awake()
@@ -36,8 +39,7 @@ public class TeleportChar : PlayableCharacter
         if(isJumping) 
         {
             //teleports player to the lane above them if its exists
-            //play ability animation
-            anim.SetTrigger("abilityActive");
+           
 
 
             if (currentLane == 0) currentLane = 2;
@@ -47,15 +49,36 @@ public class TeleportChar : PlayableCharacter
             {
                 if (i == currentLane)
                 {
-                    //if (i == 0) { break; } //add animation to indicate you cant teleport? or let them teleport in  a loop?
-                    transform.position = new Vector3(transform.position.x, lanes[i].transform.position.y, transform.position.z);
-                    isJumping = false;
-                    //add animation for teleporting
-                    break;
+                    if (canTeleportUp())
+                    {
+                        transform.position = new Vector3(transform.position.x, lanes[i].transform.position.y, transform.position.z);
+                        //play ability animation
+                        anim.SetTrigger("abilityActive");
+                        isJumping = false;
+                    }
+                    else currentLane++;
+                    
                 }
                 else continue;
             }
         }
+    }
+
+    private bool canTeleportUp()
+    {
+        if (Physics2D.OverlapCircle(above.position, 0.5f, blockLayer))
+        {
+            return false;
+        }
+        else return true;
+    }
+    private bool canTeleportDown()
+    {
+        if (Physics2D.OverlapCircle(bellow.position, 0.5f, blockLayer))
+        {
+            return false;
+        }
+        else return true;
     }
 
     public override void Slide() //slide ability is replaced with teleport down
@@ -69,13 +92,15 @@ public class TeleportChar : PlayableCharacter
 
             for (int i = 0; i < lanes.Length; i++)
             {
-                if (i == currentLane)
+                if (i == currentLane && canTeleportDown())
                 {
-                    transform.position = new Vector3(transform.position.x, lanes[i].transform.position.y, transform.position.z);
-                    //play ability animation
-                    anim.SetTrigger("abilityActive");
-                    
-                    break;
+                    if (canTeleportDown())
+                    {
+                        transform.position = new Vector3(transform.position.x, lanes[i].transform.position.y, transform.position.z);
+                        //play ability animation
+                        anim.SetTrigger("abilityActive");
+                    }
+                    else currentLane++;
                 }
                 else continue;
             } 
