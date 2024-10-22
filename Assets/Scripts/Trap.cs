@@ -8,6 +8,10 @@ public class Trap : MonoBehaviour, IDamageable, IAnimated
     private Animator anim;
     protected Collider2D trigger;
 
+    private void OnEnable()
+    {
+        StartCoroutine(DeleteAfterTime());
+    }
     public virtual void OnTriggerEnter2D(Collider2D other)
     {
         //apply damage to char
@@ -36,19 +40,18 @@ public class Trap : MonoBehaviour, IDamageable, IAnimated
 
     public void Die()
     {
-        //play destroy animation
-
-        //wait for animation to end
-        //WaitForAnimation();
-
-        //destroy object or set inactive?
+        //destroy object 
         Destroy(this.gameObject);
-
-        
     }
 
     public IEnumerator WaitForAnimation()//waits for animation to end
     {
         yield return new WaitWhile(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f);
+    }
+
+    IEnumerator DeleteAfterTime()
+    {
+        yield return new WaitForSeconds(60);
+        Die();
     }
 }

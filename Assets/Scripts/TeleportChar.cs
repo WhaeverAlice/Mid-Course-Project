@@ -44,7 +44,7 @@ public class TeleportChar : PlayableCharacter
 
             if (currentLane == 0) currentLane = 2;
             else currentLane--;
-            if (currentLane == 2) return;
+            //if (currentLane == 2) return;
             for (int i = 0; i < lanes.Length; i++)
             {
                 if (i == currentLane)
@@ -88,7 +88,7 @@ public class TeleportChar : PlayableCharacter
             //teleports player to the lane below them if its exists
             if (currentLane == lanes.Length - 1) currentLane = 0;
             else currentLane++;
-            if (currentLane == 0) return;
+            //if (currentLane == 0) return;
 
             for (int i = 0; i < lanes.Length; i++)
             {

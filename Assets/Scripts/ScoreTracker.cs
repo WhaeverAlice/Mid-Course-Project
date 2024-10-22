@@ -10,12 +10,11 @@ public class ScoreTracker : MonoBehaviour
     [SerializeField] public TMP_Text highScoreText;
     private int currentScore = 0;
     public int finalScore;
-    public int highScore;
 
 
     void Update()
     {
-        currentScoreText.color = Color.white;
+        
         currentScoreText.text = currentScore.ToString();
         finalScore = currentScore;
     }
@@ -43,7 +42,8 @@ public class ScoreTracker : MonoBehaviour
         currentScore += byThisMuch;
         if (byThisMuch > 1) 
         {
-        currentScoreText.color = Color.yellow;
+            currentScoreText.color = Color.yellow;
+            StartCoroutine(DelayColorReturn());
         }
     }
 
@@ -52,5 +52,9 @@ public class ScoreTracker : MonoBehaviour
         currentScore = 0;
     }
 
-   
+    IEnumerator DelayColorReturn()
+    {
+        yield return new WaitForSeconds(0.2f);
+        currentScoreText.color = Color.white;
+    }
 }
