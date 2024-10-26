@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RollChar : PlayableCharacter
 {
+
     //public void Awake()
     //{
     //    rb = GetComponent<Rigidbody2D>();

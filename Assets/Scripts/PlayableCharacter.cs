@@ -29,7 +29,6 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
 
     public void Awake()
     {
-        //resetCharacters();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         rbSprite = GetComponent<SpriteRenderer>();
@@ -37,6 +36,10 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
         currentHP = maxHP;
     }
 
+    private void OnEnable()
+    {
+        abilityActive = false;
+    }
     void FixedUpdate()
     {
         if (!dead) scoreTracker.IncreaseScore(1);
@@ -50,9 +53,7 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
         }
         rbSprite.color = spriteColor; 
     }
-
     public abstract void SpecialAbility();
-
     public void Move(float jumpForce, float moveSpeed)
     {
         if (!dead) 
@@ -63,18 +64,6 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
         Jump(jumpForce);
         Slide();
     }
-
-    //public void IncreaseScore(int byThisMuch)
-    //{
-    //    score += byThisMuch;
-    //}
-
-    //public string GetScore()
-    //{
-    //    string currentScore = score.ToString();
-    //    return currentScore;
-    //}
-
     public virtual void Slide()
     {
         if (isSliding)

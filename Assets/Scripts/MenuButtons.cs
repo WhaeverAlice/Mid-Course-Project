@@ -15,8 +15,12 @@ public class MenuButtons : MonoBehaviour
         PlayerPrefs.SetInt("SavedHighScore", 0);
     }
 
-    public void DisableMenu()
+    public void DisableGameObject()
     {
         this.gameObject.SetActive(false);
+    }
+    public void EnableGameObject()
+    {
+        this.gameObject.SetActive(true);
     }
 }

@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 public class TeleportChar : PlayableCharacter
 {
@@ -11,27 +14,18 @@ public class TeleportChar : PlayableCharacter
     [SerializeField] private Transform bellow;
     [SerializeField] private LayerMask blockLayer;
     [SerializeField] private Transform[] lanes;
-
-    //public void Awake()
-    //{
-    //    rb = GetComponent<Rigidbody2D>();
-    //    anim = GetComponent<Animator>();
-    //    currentHP = maxHP;
-    //   
-    //}
+    [SerializeField] private Transform viewBoundsStart;
+    [SerializeField] private Transform viewBoundsEnd;
 
     void Start()
     {
         canJumpAndSlide = false;
     }
 
-    //void FixedUpdate()
-    //{
-    //    if (!dead) score += 1;
-    //}
     public override void SpecialAbility()
     {
         //jump replaces special ability - maybe add a random teleport or a teleport projectiles
+        return;
     }
 
     public override void Jump(float jumpForce) //jump ability is replaced with teleport up
@@ -41,11 +35,11 @@ public class TeleportChar : PlayableCharacter
             //teleports player to the lane above them if its exists
            
 
-
+            int temp = currentLane;
             if (currentLane == 0) currentLane = 2;
             else currentLane--;
             //if (currentLane == 2) return;
-            for (int i = 0; i < lanes.Length; i++)
+            for (int i = 2; i > -1 ; i--)
             {
                 if (i == currentLane)
                 {
@@ -56,17 +50,28 @@ public class TeleportChar : PlayableCharacter
                         anim.SetTrigger("abilityActive");
                         isJumping = false;
                     }
-                    else currentLane++;
-                    
+                    else
+                    {
+                        currentLane = temp;
+                        //currentLane++;
+                        //if (currentLane > lanes.Length - 1) currentLane = lanes.Length - 1;
+                        //else if (currentLane == lanes.Length - 1) currentLane = 0;
+                    }
                 }
                 else continue;
             }
+            Debug.Log(currentLane);
         }
+        isJumping = false;
     }
 
     private bool canTeleportUp()
     {
-        if (Physics2D.OverlapCircle(above.position, 0.5f, blockLayer))
+        if (IsInCameraView(above) && Physics2D.OverlapCircle(above.position, 0.3f, blockLayer))
+        {
+            return false;
+        }
+        else if (!IsInCameraView(above) && Physics2D.OverlapCircle(lanes[2].position, 0.3f, blockLayer))
         {
             return false;
         }
@@ -74,17 +79,23 @@ public class TeleportChar : PlayableCharacter
     }
     private bool canTeleportDown()
     {
-        if (Physics2D.OverlapCircle(bellow.position, 0.5f, blockLayer))
+         if (IsInCameraView(bellow) && Physics2D.OverlapCircle(bellow.position, 0.3f, blockLayer))
+         {
+             return false;
+         }
+
+         else if (!IsInCameraView(bellow) && Physics2D.OverlapCircle(lanes[0].position, 0.3f, blockLayer))
         {
-            return false;
+            return false ;
         }
-        else return true;
+         else return true;
     }
 
     public override void Slide() //slide ability is replaced with teleport down
     {
         if (isSliding)
         {
+            int temp = currentLane;
             //teleports player to the lane below them if its exists
             if (currentLane == lanes.Length - 1) currentLane = 0;
             else currentLane++;
@@ -92,7 +103,7 @@ public class TeleportChar : PlayableCharacter
 
             for (int i = 0; i < lanes.Length; i++)
             {
-                if (i == currentLane && canTeleportDown())
+                if (i == currentLane)
                 {
                     if (canTeleportDown())
                     {
@@ -100,12 +111,28 @@ public class TeleportChar : PlayableCharacter
                         //play ability animation
                         anim.SetTrigger("abilityActive");
                     }
-                    else currentLane++;
+                    else
+                    {
+                        currentLane = temp;
+                        //currentLane--;
+                        //if (currentLane < 0) currentLane = 0; 
+                        //else if (currentLane == 0) currentLane = lanes.Length - 1;
+                    }
                 }
                 else continue;
-            } 
+            }
+            Debug.Log(currentLane);
         }
         isSliding = false;
+       
+    }
+
+    private bool IsInCameraView(Transform target)
+    {
+        Vector3 viewportPoint = Camera.main.WorldToViewportPoint(target.position);
+        return viewportPoint.x >= 0 && viewportPoint.x <= 1 &&
+               viewportPoint.y >= 0 && viewportPoint.y <= 1 &&
+               viewportPoint.z >= 0;
     }
 
     //public override void OnCollisonEnter2D(Collider2D collider)

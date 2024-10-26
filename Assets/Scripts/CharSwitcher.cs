@@ -8,8 +8,14 @@ public class CharSwitcher : MonoBehaviour
 {
     [SerializeField] private GameObject[] characters;
     public PlayableCharacter activeChar;
-    int currentActive = 1;
+    int currentActive;
     public int avialableChars = 3;
+
+    private void Awake()
+    {
+        SetRandomCharacter();
+        //currentActive = activeChar.charNum;
+    }
 
     public void SwitchChar(string dir)
     {
@@ -48,7 +54,6 @@ public class CharSwitcher : MonoBehaviour
             }
             else characters[i].SetActive(false);
         }
-       // return activeChar;
     }
 
     public void SetRandomCharacter()
@@ -57,10 +62,12 @@ public class CharSwitcher : MonoBehaviour
         {
             chara.SetActive(false);
         }
-        GameObject character = characters[Random.Range(0, characters.Length)];
+        int randomIndex = Random.Range(0, characters.Length);
+        GameObject character = characters[randomIndex];
+        //GameObject character = characters[Random.Range(0, characters.Length)];
         character.SetActive(true);
         activeChar = character.GetComponent<PlayableCharacter>();
-       // return activeChar;
+        currentActive = randomIndex;
     }
 
     public GameObject GetActiveCharacter()

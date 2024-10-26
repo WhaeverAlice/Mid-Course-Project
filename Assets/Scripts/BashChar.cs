@@ -5,6 +5,7 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class BashChar : PlayableCharacter
 {
+
     //public void Awake()
     //{
     //    rb = GetComponent<Rigidbody2D>();

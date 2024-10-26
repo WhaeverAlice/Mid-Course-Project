@@ -9,14 +9,12 @@ public class ScoreTracker : MonoBehaviour
     [SerializeField] public TMP_Text finalScoreText;
     [SerializeField] public TMP_Text highScoreText;
     private int currentScore = 0;
-    public int finalScore;
 
 
     void Update()
     {
         
         currentScoreText.text = currentScore.ToString();
-        finalScore = currentScore;
     }
 
     public void UpdateHighScore()
@@ -33,7 +31,13 @@ public class ScoreTracker : MonoBehaviour
             PlayerPrefs.SetInt("SavedHighScore", currentScore);
         }
 
-        finalScoreText.text = finalScore.ToString();
+        finalScoreText.text = currentScore.ToString();
+        highScoreText.text = PlayerPrefs.GetInt("SavedHighScore").ToString();
+    }
+
+    public void OverwriteHighScore()
+    {
+        PlayerPrefs.SetInt("SavedHighScore", currentScore);
         highScoreText.text = PlayerPrefs.GetInt("SavedHighScore").ToString();
     }
 

@@ -15,8 +15,7 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-      charSwitcher.SetRandomCharacter();
-      //activeChar = charSwitcher.activeChar;
+      //charSwitcher.SetRandomCharacter();
     }
 
     // Update is called once per frame
