@@ -6,7 +6,7 @@ using UnityEngine.TextCore.Text;
 
 public class CharSwitcher : MonoBehaviour
 {
-    [SerializeField] private GameObject[] characters;
+    [SerializeField] public GameObject[] characters;
     public PlayableCharacter activeChar;
     int currentActive;
     public int avialableChars = 3;
@@ -19,29 +19,31 @@ public class CharSwitcher : MonoBehaviour
 
     public void SwitchChar(string dir)
     {
-        switch (dir)
+        if (!PlayableCharacter.dead)
         {
-            case "right":
-                if (currentActive == characters.Length - 1) currentActive = 0;
-                else currentActive++;
-                break;
-               
-            case "left":
-                if (currentActive == 0) currentActive = 2;
-                else currentActive--;
-                break;
-        }
-
-        for (int i = 0; i < characters.Length; i++)
-        {
-            if (i == currentActive)
+            switch (dir)
             {
-                //if (characters[i].GetComponent<PlayableCharacter>().dead)
-                //{
-                //    SwitchChar(dir);
-                //}
-                //else 
-                //{
+                case "right":
+                    if (currentActive == characters.Length - 1) currentActive = 0;
+                    else currentActive++;
+                    break;
+
+                case "left":
+                    if (currentActive == 0) currentActive = 2;
+                    else currentActive--;
+                    break;
+            }
+
+            for (int i = 0; i < characters.Length; i++)
+            {
+                if (i == currentActive)
+                {
+                    //if (characters[i].GetComponent<PlayableCharacter>().dead)
+                    //{
+                    //    SwitchChar(dir);
+                    //}
+                    //else 
+                    //{
                     characters[i].transform.position = activeChar.transform.position;
                     characters[i].SetActive(true);
                     //Debug.Log("character set active");
@@ -50,9 +52,10 @@ public class CharSwitcher : MonoBehaviour
                     activeChar.isInvulnerable = false;
                     //activeChar.BecomeInvulnerable(); //charater get damage when switched
                     //Debug.Log("switched character supposed to be invulnerabel");
-                //}
-            }
-            else characters[i].SetActive(false);
+                    //}
+                }
+                else characters[i].SetActive(false);
+            } 
         }
     }
 

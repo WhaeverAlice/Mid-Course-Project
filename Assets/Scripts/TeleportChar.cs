@@ -53,9 +53,6 @@ public class TeleportChar : PlayableCharacter
                     else
                     {
                         currentLane = temp;
-                        //currentLane++;
-                        //if (currentLane > lanes.Length - 1) currentLane = lanes.Length - 1;
-                        //else if (currentLane == lanes.Length - 1) currentLane = 0;
                     }
                 }
                 else continue;
@@ -114,9 +111,6 @@ public class TeleportChar : PlayableCharacter
                     else
                     {
                         currentLane = temp;
-                        //currentLane--;
-                        //if (currentLane < 0) currentLane = 0; 
-                        //else if (currentLane == 0) currentLane = lanes.Length - 1;
                     }
                 }
                 else continue;

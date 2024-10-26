@@ -18,7 +18,7 @@ public class HealthUI : MonoBehaviour
     {
         for (int i = 0; i < hearts.Length; i++)
         {
-          hearts[i].sprite = emptyHeart;
+          hearts[i].sprite = fullHeart;
         }
         //iconColor = Color.white;
     }

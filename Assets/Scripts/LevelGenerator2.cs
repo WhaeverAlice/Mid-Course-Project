@@ -19,7 +19,7 @@ public class LevelGenerator2 : MonoBehaviour
     private void Awake()
     {
         activeChar = characterSwitcher.activeChar;
-        lastPartPosition = lanes[1].position;
+        lastPartPosition = lanes[1].position + new Vector3(16, 0, 0);
         
         int startingSpawnParts = 5;
         for (int i = 0; i < startingSpawnParts; i++)
