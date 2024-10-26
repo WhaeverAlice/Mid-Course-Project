@@ -23,4 +23,9 @@ public class MenuButtons : MonoBehaviour
     {
         this.gameObject.SetActive(true);
     }
+
+    public void Resume()
+    {
+        Time.timeScale = 1.0f;
+    }
 }

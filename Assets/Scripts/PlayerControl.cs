@@ -10,6 +10,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float moveSpeed;
     [SerializeField] private CharSwitcher charSwitcher;
+    [SerializeField] private GameObject pauseMenu;
     private PlayableCharacter activeChar;
    
     // Start is called before the first frame update
@@ -54,6 +55,11 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             charSwitcher.activeChar.SpecialAbility();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape)) 
+        {
+            pauseMenu.SetActive(true);
+            Time.timeScale = 0;
         }
     }
 }

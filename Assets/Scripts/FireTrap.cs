@@ -5,6 +5,7 @@ using UnityEngine;
 public class FireTrap : Trap
 {
     [SerializeField] GameObject smokeParticles;
+    [SerializeField] AudioSource audioSource;
     private void Awake()
     {
         trigger = GetComponent<Collider2D>();
@@ -19,6 +20,7 @@ public class FireTrap : Trap
             player.abilityActive = false;
             //method for destroying trap (animation and destroy?)
             this.ApplyDamage();
+            audioSource.Play();
             smokeParticles.SetActive(true);
 
             //extra score for destroying traps

@@ -39,6 +39,8 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
     private void OnEnable()
     {
         abilityActive = false;
+        isJumping = false;
+        isSliding = false;
     }
     void FixedUpdate()
     {

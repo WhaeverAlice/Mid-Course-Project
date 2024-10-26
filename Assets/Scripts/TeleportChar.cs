@@ -14,8 +14,7 @@ public class TeleportChar : PlayableCharacter
     [SerializeField] private Transform bellow;
     [SerializeField] private LayerMask blockLayer;
     [SerializeField] private Transform[] lanes;
-    [SerializeField] private Transform viewBoundsStart;
-    [SerializeField] private Transform viewBoundsEnd;
+    [SerializeField] private AudioSource ability;
 
     void Start()
     {
@@ -48,7 +47,8 @@ public class TeleportChar : PlayableCharacter
                         transform.position = new Vector3(transform.position.x, lanes[i].transform.position.y, transform.position.z);
                         //play ability animation
                         anim.SetTrigger("abilityActive");
-                        isJumping = false;
+                        ability.Play();
+                        //isJumping = false;
                     }
                     else
                     {
@@ -107,6 +107,7 @@ public class TeleportChar : PlayableCharacter
                         transform.position = new Vector3(transform.position.x, lanes[i].transform.position.y, transform.position.z);
                         //play ability animation
                         anim.SetTrigger("abilityActive");
+                        ability.Play();
                     }
                     else
                     {

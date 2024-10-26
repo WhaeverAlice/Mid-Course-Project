@@ -23,7 +23,6 @@ public class RosterIcons : MonoBehaviour
     void Update()
     {
         GetCharIcon();
-        //if (PlayableCharacter.dead) this.gameObject.SetActive(false);
     }
 
     public void GetCharIcon()
