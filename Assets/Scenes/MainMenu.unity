@@ -1232,7 +1232,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.448, y: 12.4855}
+  m_AnchoredPosition: {x: -0.448, y: 8.613995}
   m_SizeDelta: {x: 977.6448, y: 568.9584}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &514929735
@@ -1566,9 +1566,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "This charcter doesnt have a special abiliy but instead moves in a special
-    way. \nInstead of jumping and sliding, you can  teleport between the different
-    lanes using\t\tand\t\t"
+  m_text: "The third charcter doesnt have a special abiliy but instead moves in a
+    special way. \nInstead of jumping and sliding, you can  teleport between the
+    different lanes using\t\tand\t\t"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2245,7 +2245,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0888, y: 12.8715}
+  m_AnchoredPosition: {x: 0.0888, y: 9}
   m_SizeDelta: {x: 969.6727, y: 564.3215}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &897322604
@@ -2473,7 +2473,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00000095367, y: 13}
+  m_AnchoredPosition: {x: 0.00000095367, y: 9.128494}
   m_SizeDelta: {x: 970.2111, y: 564.6311}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &902936555
@@ -2568,7 +2568,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.2835027, y: 0.18833335}
   m_AnchorMax: {x: 0.69828194, y: 0.79266673}
-  m_AnchoredPosition: {x: -11.891815, y: -17.091003}
+  m_AnchoredPosition: {x: 10.000004, y: -17.091003}
   m_SizeDelta: {x: 137.1649, y: 82.2509}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &994497650
@@ -3766,7 +3766,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.2835027, y: 0.18833335}
   m_AnchorMax: {x: 0.69828194, y: 0.79266673}
-  m_AnchoredPosition: {x: -11.891815, y: -17.091003}
+  m_AnchoredPosition: {x: 10.000004, y: -17.091003}
   m_SizeDelta: {x: 137.1649, y: 82.2509}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1405475336
@@ -4544,7 +4544,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.6064, y: 13.0151}
+  m_AnchoredPosition: {x: 0.6064, y: 9.143594}
   m_SizeDelta: {x: 975.7466, y: 567.8505}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1583682967
@@ -4635,7 +4635,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00000095367, y: 13}
+  m_AnchoredPosition: {x: 0.00000095367, y: 9.128494}
   m_SizeDelta: {x: 970.2111, y: 564.6311}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1621601738
@@ -4850,7 +4850,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00001049, y: 124}
+  m_AnchoredPosition: {x: -8, y: 124}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1700558555
@@ -4875,8 +4875,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Credits
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6116,7 +6116,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.2835027, y: 0.18833335}
   m_AnchorMax: {x: 0.69828194, y: 0.79266673}
-  m_AnchoredPosition: {x: -11.891815, y: -17.091003}
+  m_AnchoredPosition: {x: 10, y: -17.091003}
   m_SizeDelta: {x: 137.1649, y: 82.2509}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1980383661
@@ -6292,8 +6292,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: How to Play
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
