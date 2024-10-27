@@ -6,15 +6,18 @@ using UnityEngine;
 public class ScoreTracker : MonoBehaviour
 {
     [SerializeField] public TMP_Text currentScoreText;
+    [SerializeField] public TMP_Text currentScoreTextPause;
     [SerializeField] public TMP_Text finalScoreText;
     [SerializeField] public TMP_Text highScoreText;
+    [SerializeField] public TMP_Text highScoreTextPause;
     private int currentScore = 0;
 
 
     void Update()
     {
-        
         currentScoreText.text = currentScore.ToString();
+        currentScoreTextPause.text = currentScore.ToString();
+        highScoreTextPause.text = PlayerPrefs.GetInt("SavedHighScore").ToString();
     }
 
     public void UpdateHighScore()

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RollChar : PlayableCharacter
+public class WaterChar : PlayableCharacter
 {
     public override void SpecialAbility()
     {
@@ -14,6 +14,5 @@ public class RollChar : PlayableCharacter
 
         //wait for animation of ability to end
         WaitForAnimation();
-       
     }
 }

@@ -13,6 +13,7 @@ public class LoadScene : MonoBehaviour, IAnimated
     }  
     public void GoToGameFromMenu()
     {
+        //play loading animation
         bgAnim.SetTrigger("LoadGame");
         StartCoroutine(WaitForAnimation());
     }
@@ -23,25 +24,11 @@ public class LoadScene : MonoBehaviour, IAnimated
 
     public IEnumerator WaitForAnimation()
     {
-        // Wait until the "LoadGame" animation is done playing
+        //Wait until the "LoadGame" animation is done playing
         yield return new WaitUntil(() => bgAnim.GetCurrentAnimatorStateInfo(0).IsName("SkyWipe") &&
                                        bgAnim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f);
 
-        // Now load the new scene after the animation is complete
+        //load the new scene after the animation is complete
         SceneManager.LoadScene("Game");
-    }
-
-    //public IEnumerator WaitForAnimation()
-    //{
-    //    yield return new WaitWhile(() => bgAnim.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f);
-    //    SceneManager.LoadScene("Game");
-
-    //    //yield return new WaitForSeconds(2.3f);
-    //}
-
-    public void TestAnim()
-    {
-        bgAnim.SetTrigger("LoadGame");
-        Debug.Log(bgAnim.GetCurrentAnimatorStateInfo(0).IsName("SkyWipe"));
     }
 }

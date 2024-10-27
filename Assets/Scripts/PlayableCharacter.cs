@@ -5,11 +5,6 @@ using UnityEngine.TextCore.Text;
 
 public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
 {
-    protected static int maxHP = 9;
-    public static int currentHP { get; protected set; }
-    public static bool dead = false;
-    public Rigidbody2D rb;
-    private SpriteRenderer rbSprite;
     [SerializeField] CharSwitcher characterSwitcher;
     [SerializeField] private Collider2D standCol;
     [SerializeField] private Collider2D slidCol;
@@ -17,11 +12,15 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
     [SerializeField] private float knockbackDelay;
     [SerializeField] public ScoreTracker scoreTracker;
     [SerializeField] private GameObject gameOverScreen;
+    public Rigidbody2D rb;
+    private SpriteRenderer rbSprite;
     public Animator anim;
     private Color spriteColor;
+    protected static int maxHP = 9;
+    public static int currentHP { get; protected set; }
+    public static bool dead = false;
     public bool isJumping = false;
     public bool isSliding = false;
-    //public static int score { get; protected set; } = 0;
     public bool canJumpAndSlide { get; protected set; } = true;
     public bool abilityActive = false;
     public bool isInvulnerable = false;
@@ -29,6 +28,7 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
 
     public void Awake()
     {
+        //get character components
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         rbSprite = GetComponent<SpriteRenderer>();
@@ -38,13 +38,17 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
 
     private void OnEnable()
     {
+        //reset character actions
         abilityActive = false;
         isJumping = false;
         isSliding = false;
     }
     void FixedUpdate()
     {
+        //increase score by 1 each fixed frame
         if (!dead) scoreTracker.IncreaseScore(1);
+        
+        //change sprite alpha value if charcter is invulnerable
         if (isInvulnerable)
         {
             spriteColor.a = 0.7f;
@@ -58,65 +62,16 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
     public abstract void SpecialAbility();
     public void Move(float jumpForce, float moveSpeed)
     {
+        //move character right at a constant speed when player is alive 
         if (!dead) 
         {
         transform.position += Vector3.right * moveSpeed * Time.fixedDeltaTime;
         }
+
+        //reset animation after jumping
         anim.SetBool("isJumping", false);
         Jump(jumpForce);
         Slide();
-    }
-    public virtual void Slide()
-    {
-        if (isSliding)
-        {
-            anim.SetBool("isSliding", true);
-            standCol.enabled = false;
-            slidCol.enabled = true;
-
-        }
-        else
-        {
-            anim.SetBool("isSliding", false);
-            WaitForAnimation();
-            standCol.enabled = true;
-            slidCol.enabled = false;
-        }
-        isSliding = false;
-    }
-
-    public void ApplyKnockback()
-    {
-        //StopAllCoroutines();
-        //new Vector3(transform.position.x + 1, transform.position.y, transform.position.z)
-        Vector2 direction = (-transform.position).normalized;
-        rb.AddForce(direction * knockbackStrength, ForceMode2D.Impulse);
-        RecoverFromKnockback();
-        StartCoroutine(RecoverFromKnockback());
-    }
-
-    public IEnumerator WaitForAnimation() //waits for animation transition to end
-    {
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f);
-    }
-
-    private IEnumerator RecoverFromKnockback()
-    {
-        yield return new WaitForSeconds(knockbackDelay);
-        rb.velocity = Vector3.zero;
-    }
-
-    public IEnumerator BecomeInvulnerable()
-    {
-        isInvulnerable = true;
-        Physics2D.IgnoreLayerCollision(11, 7, true); //ignore collison between player and traps
-        //rbSprite.material.color = Color.white; //change sprite color to white to indicate hit
-        //Debug.Log("invincible on");
-        yield return new WaitForSeconds(2f);
-        Physics2D.IgnoreLayerCollision(11, 7, false); //return collison between player and traps
-        isInvulnerable = false;
-        //Debug.Log("invincible off");
-
     }
     public virtual void Jump(float jumpForce)
     {
@@ -125,67 +80,104 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
             rb.velocity = Vector2.up * jumpForce;
             anim.SetBool("isJumping", true);
         }
-        //add something to check when player is touching the ground
         isJumping = false;
+    }
+    public virtual void Slide()
+    {
+        if (isSliding)
+        {
+            //play sliding animation
+            anim.SetBool("isSliding", true);
+
+            //disable standing collider and enable sliding collider
+            standCol.enabled = false;
+            slidCol.enabled = true;
+        }
+        else
+        {
+            //exit sliding animation
+            anim.SetBool("isSliding", false);
+            WaitForAnimation();
+
+            //enable standing collider and disable sliding collider
+            standCol.enabled = true;
+            slidCol.enabled = false;
+        }
+        isSliding = false;
     }
     public void ApplyDamage()
     {
-        if(isInvulnerable) 
+        if (isInvulnerable)
         {
-        return;
+            return;
         }
-        //add something to make haracter invinsible for a couple of seconds
+
+        //make haracter invulnerable for a couple of seconds
         StartCoroutine(BecomeInvulnerable());
 
-        //add something to make character knockback from hit
+        //apply knockback from hit
         ApplyKnockback();
-        
+
+        //reduce hp
         currentHP -= 1;
-        //Debug.Log($"Damage take. current hp: {currentHP}");
+
+        //trigger death if hp is at 0
         if (currentHP <= 0)
         {
             Die();
         }
         else
         {
-            //add taking hit animation
+            //play taking hit animation
             anim.SetTrigger("playerHit");
             StartCoroutine(WaitForAnimation());
         }
     }
-    public void Die()
+    public IEnumerator BecomeInvulnerable()
     {
-        dead = true;
-        scoreTracker.UpdateHighScore();
-        gameOverScreen.SetActive(true);
-        //characterSwitcher.avialableChars--;
+        isInvulnerable = true;
+        Physics2D.IgnoreLayerCollision(11, 7, true); //ignore collison between player and traps
 
-        
-
-       // if (characterSwitcher.avialableChars <= 0)
-       // {
-
-            //make player stop
-            rb.velocity = Vector3.zero; 
-            anim.SetBool("isDying", true);
-       // }
-
-        //else
-        //{
-        //    //force a switch to another char thats alive
-        //    StartCoroutine(ForceSwitch());
-        //    //Debug.Log("switch triggered");
-        //    //characterSwitcher.SwitchChar("right");
-        //}
+        //remain active for 2 seconds
+        yield return new WaitForSeconds(2f);
+        Physics2D.IgnoreLayerCollision(11, 7, false); //return collison between player and traps
+        isInvulnerable = false;
     }
-
-    public IEnumerator ForceSwitch()
+    public void ApplyKnockback()
+    {
+        //add opposite force to create knockback
+        Vector2 direction = (-transform.position).normalized;
+        rb.AddForce(direction * knockbackStrength, ForceMode2D.Impulse);
+        StartCoroutine(RecoverFromKnockback());
+    }
+    private IEnumerator RecoverFromKnockback() //stops force of knockback after a time
     {
         yield return new WaitForSeconds(knockbackDelay);
-        characterSwitcher.SwitchChar("right");
+        rb.velocity = Vector3.zero;
     }
+    public void Die()
+    {
+        //set character as dead
+        dead = true;
 
-    public void resetCharacters()
+        //stop player movement
+        rb.velocity = Vector3.zero;
+
+        //play death animation
+        anim.SetBool("isDying", true);
+
+        //update final score
+        scoreTracker.UpdateHighScore();
+
+        //open game over screen
+        gameOverScreen.SetActive(true);
+    }
+    public IEnumerator WaitForAnimation() //waits for animation transition to end
+    {
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime <= 1.0f);
+    }
+   
+    public void resetCharacters() //reset character and score before a new run
     {
         dead = false;
         scoreTracker.ResetCurrentScore();
