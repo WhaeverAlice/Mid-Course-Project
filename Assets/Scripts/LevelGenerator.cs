@@ -8,143 +8,58 @@ using UnityEngine.UIElements;
 public class LevelGenerator : MonoBehaviour
 {
     private float playerDistSpawnTrap = 40f;
-    [SerializeField] private Transform topTraps;
-    [SerializeField] private Transform midTraps;
-    [SerializeField] private Transform bottTraps;
-    [SerializeField] private Transform viewBoundsStart;
-    [SerializeField] private Transform viewBoundsEnd;
-    [SerializeField] private List<Transform> traps;
+    [SerializeField] private Transform[] lanes;
+    [SerializeField] private Transform[] basicParts;
+    [SerializeField] private Transform[] levelParts;
     [SerializeField] private CharSwitcher characterSwitcher;
-    [SerializeField] private PlayableCharacter waterChar;
-    [SerializeField] private PlayableCharacter TeleportChar;
-    [SerializeField] private PlayableCharacter BashChar;
     private PlayableCharacter activeChar;
 
-    private Vector3 lastTrapPositionTop;
-    private Vector3 lastTrapPositionMid;
-    private Vector3 lastTrapPositionBott;
+    private Vector3 lastPartPosition;
 
     private void Awake()
     {
         activeChar = characterSwitcher.activeChar;
-        lastTrapPositionTop = topTraps.Find("OriginTransform").position;
-        lastTrapPositionMid = midTraps.Find("OriginTransform").position;
-        lastTrapPositionBott = bottTraps.Find("OriginTransform").position;
+        lastPartPosition = lanes[1].position + new Vector3(16, 0, 0);
 
-        int startingSpawnTraps = 5;
-        for (int i = 0; i < startingSpawnTraps; i++)
+        int startingSpawnParts = 5;
+        for (int i = 0; i < startingSpawnParts; i++)
         {
-            SpawnTrapTop();
-            SpawnTrapMid();
-            SpawnTrapBott();
+            SpawnPart();
         }
     }
 
     private void Update()
     {
-        //if (waterChar.dead)
-        //{
-        //    traps[1] = null;
-        //}
-        //if (TeleportChar.dead)
-        //{
-        //    traps[5] = null;
-        //    traps[6] = null;
-        //}
-        //if (BashChar.dead)
-        //{
-        //    traps[3] = null;
-        //}
-        
         activeChar = characterSwitcher.activeChar;
-        if (Vector3.Distance(activeChar.transform.position, lastTrapPositionTop) < playerDistSpawnTrap) 
+        if (Vector3.Distance(activeChar.transform.position, lastPartPosition) < playerDistSpawnTrap)
         {
-            SpawnTrapTop();
-        }
-        if (Vector3.Distance(activeChar.transform.position, lastTrapPositionMid) < playerDistSpawnTrap) 
-        {
-            SpawnTrapMid();
-        }
-        if (Vector3.Distance(activeChar.transform.position, lastTrapPositionBott) < playerDistSpawnTrap) 
-        {
-            SpawnTrapBott();
+            SpawnPart();
         }
     }
 
-    //private void SpawnTrap(ref Vector3 spawnPoint)
-    //{
-    //    Transform chosenTrap = traps[Random.Range(0, traps.Length)];
-    //    Transform lastTrapTransform = GetTrap(chosenTrap, spawnPoint);
-    //    spawnPoint = new Vector3(lastTrapTransform.Find("MinGap").position.x, lastTrapTransform.Find("OriginTransform").position.y, chosenTrap.Find("OriginTransform").position.z);
-    //}
-     private void SpawnTrapTop()
+    private void SpawnPart()
     {
-        Transform chosenTrap = GetRandomTrap();
-        Transform lastTrapTransform = SetTrap(chosenTrap, lastTrapPositionTop);
-        lastTrapPositionTop = new Vector3(lastTrapTransform.Find("MinGap").position.x, lastTrapTransform.Find("OriginTransform").position.y, chosenTrap.Find("OriginTransform").position.z);
-    }
-     private void SpawnTrapMid()
-    {
-        Transform chosenTrap = GetRandomTrap();
-        Transform lastTrapTransform = SetTrap(chosenTrap, lastTrapPositionMid);
-        lastTrapPositionMid = new Vector3(lastTrapTransform.Find("MinGap").position.x, lastTrapTransform.Find("OriginTransform").position.y, chosenTrap.Find("OriginTransform").position.z);
-    }
-     private void SpawnTrapBott()
-    {
-        Transform chosenTrap = GetRandomTrap();
-        Transform lastTrapTransform = SetTrap(chosenTrap, lastTrapPositionBott);
-        lastTrapPositionBott = new Vector3(lastTrapTransform.Find("MinGap").position.x, lastTrapTransform.Find("OriginTransform").position.y, chosenTrap.Find("OriginTransform").position.z);
+        Transform lastPartTransform = SetRandomPart(GetRandomPart(), lastPartPosition);
+        lastPartPosition = new Vector3(lastPartTransform.Find("Gap").position.x, lanes[Random.Range(0, lanes.Length)].position.y, lastPartTransform.Find("Origin").position.z);
     }
 
-    private Transform SetTrap(Transform trap, Vector3 spawnPosition)
+
+    private Transform SetRandomPart(Transform part, Vector3 spawnPosition)
     {
-        Transform trapTransform = Instantiate(trap, spawnPosition, Quaternion.identity);
-        return trapTransform;
+        Transform partTransform = Instantiate(part, spawnPosition, Quaternion.identity);
+        return partTransform;
     }
 
-    private Transform GetRandomTrap()
-    {
-        Transform chosenTrap = traps[GetRandomValue()];
-        Collider2D[] objects = Physics2D.OverlapAreaAll(viewBoundsStart.position, viewBoundsEnd.position);
-        List<GameObject> blocks = new List<GameObject>();
-        foreach (Collider2D obj in objects)
-        {
-            if (obj.CompareTag("Block")) blocks.Add(obj.gameObject);
-            else continue;
-        }
-
-        //Collider2D[] otherTraps = Physics2D.OverlapAreaAll(chosenTrap.Find("boundsA").position, chosenTrap.Find("boundsB").position, 7);
-        //use overlap circle to see if there are traps in two transforms you set above and bellow the trap and then add at the end to return the index of empty if the length is more than 1?
-       
-        while (chosenTrap.CompareTag("Block") && blocks.Count > 0 || chosenTrap == null)
-        {
-            objects = Physics2D.OverlapAreaAll(viewBoundsStart.position, viewBoundsEnd.position);
-            foreach (Collider2D obj in objects)
-            {
-                if (obj.CompareTag("Block")) blocks.Add(obj.gameObject);
-                else continue;
-            }
-            chosenTrap = traps[GetRandomValue()];
-            blocks.Clear();
-        }
-
-        return chosenTrap;
-    }
-
-    private int GetRandomValue()
+    private Transform GetRandomPart()
     {
         float rand = Random.value;
-        if (rand <= 0.05f) 
+        if (rand <= 0.2)
         {
-            return Random.Range(5, traps.Count);
+            return levelParts[Random.Range(0, levelParts.Length)];
         }
-        else if (rand <= 0.3)
+        else
         {
-            return 4;
-        }
-        else 
-        {
-            return Random.Range(0, 4);
+            return basicParts[Random.Range(0, basicParts.Length)];
         }
     }
 }

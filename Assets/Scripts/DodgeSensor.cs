@@ -13,7 +13,8 @@ public class DodgeSensor : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D other)
     {
         PlayableCharacter player = other.gameObject.GetComponent<PlayableCharacter>();
-        //add points to score if the player dodged
+        
+        //add points to score if the player dodged succesfully
         if(!player.isTouchingTrap && !player.isInvulnerable)
         {
             player.scoreTracker.IncreaseScore(150);

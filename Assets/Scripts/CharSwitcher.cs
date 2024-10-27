@@ -13,17 +13,17 @@ public class CharSwitcher : MonoBehaviour
 
     private void Awake()
     {
+        //starts the game with a random character
         SetRandomCharacter();
-        //currentActive = activeChar.charNum;
     }
 
-    public void SwitchChar(string dir)
+    public void SwitchChar(string dir) //changes active character 
     {
         if (!PlayableCharacter.dead)
         {
             switch (dir)
             {
-                case "right":
+                case "right": 
                     if (currentActive == characters.Length - 1) currentActive = 0;
                     else currentActive++;
                     break;
@@ -36,29 +36,26 @@ public class CharSwitcher : MonoBehaviour
 
             for (int i = 0; i < characters.Length; i++)
             {
+                //enable new active character
                 if (i == currentActive)
                 {
-                    //if (characters[i].GetComponent<PlayableCharacter>().dead)
-                    //{
-                    //    SwitchChar(dir);
-                    //}
-                    //else 
-                    //{
-                    characters[i].transform.position = activeChar.transform.position;
+                    //transforms new active character to current acitve character's position
+                    characters[i].transform.position = activeChar.transform.position; 
                     characters[i].SetActive(true);
-                    //Debug.Log("character set active");
+
+                    //sets new active character
                     activeChar = characters[i].GetComponent<PlayableCharacter>();
-                    Physics2D.IgnoreLayerCollision(11, 7, false); //return collison between player and traps
+                    
+                    //return collison between player and traps in case the inulnerable coroutine was interrupted by the switch
+                    Physics2D.IgnoreLayerCollision(11, 7, false); 
                     activeChar.isInvulnerable = false;
-                    //activeChar.BecomeInvulnerable(); //charater get damage when switched
-                    //Debug.Log("switched character supposed to be invulnerabel");
-                    //}
                 }
-                else characters[i].SetActive(false);
-            } 
+                //disable all other characters
+                else characters[i].SetActive(false); 
+            }
         }
     }
-
+    
     public void SetRandomCharacter()
     {
         foreach (GameObject chara in characters)
@@ -67,15 +64,8 @@ public class CharSwitcher : MonoBehaviour
         }
         int randomIndex = Random.Range(0, characters.Length);
         GameObject character = characters[randomIndex];
-        //GameObject character = characters[Random.Range(0, characters.Length)];
         character.SetActive(true);
         activeChar = character.GetComponent<PlayableCharacter>();
         currentActive = randomIndex;
-    }
-
-    public GameObject GetActiveCharacter()
-    {
-        GameObject character = activeChar.gameObject;
-        return character;
     }
 }

@@ -14,19 +14,21 @@ public class FireTrap : Trap
     public override void OnTriggerEnter2D(Collider2D other)
     {
         PlayableCharacter player = other.gameObject.GetComponent<PlayableCharacter>();
+        
         //destroy trap if correct active ability on
         if (player.abilityActive && other.CompareTag("RollPlayer"))
         {
             player.abilityActive = false;
-            //method for destroying trap (animation and destroy?)
             this.ApplyDamage();
             audioSource.Play();
+            
+            //activate smoke particles
             smokeParticles.SetActive(true);
 
-            //extra score for destroying traps
+            //add extra score for destroying traps
             player.scoreTracker.IncreaseScore(500);
         }
-        else //take damage from trap if ability is off
+        else //make player take damage if ability is off
         {
             player.ApplyDamage();
         }

@@ -20,7 +20,7 @@ public class LevelGenerator2 : MonoBehaviour
     {
         activeChar = characterSwitcher.activeChar;
         lastPartPosition = lanes[1].position + new Vector3(16, 0, 0);
-        
+
         int startingSpawnParts = 5;
         for (int i = 0; i < startingSpawnParts; i++)
         {
@@ -42,7 +42,7 @@ public class LevelGenerator2 : MonoBehaviour
         Transform lastPartTransform = SetRandomPart(GetRandomPart(), lastPartPosition);
         lastPartPosition = new Vector3(lastPartTransform.Find("Gap").position.x, lanes[Random.Range(0, lanes.Length)].position.y, lastPartTransform.Find("Origin").position.z);
     }
-   
+
 
     private Transform SetRandomPart(Transform part, Vector3 spawnPosition)
     {

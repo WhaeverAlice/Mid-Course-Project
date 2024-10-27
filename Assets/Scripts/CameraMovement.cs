@@ -10,13 +10,15 @@ public class CameraMovement : MonoBehaviour
 
     void Start()
     {
-        target = charSwitcher.GetActiveCharacter().transform;
+        //set the active character as the target to follow
+        target = charSwitcher.activeChar.transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        target = charSwitcher.GetActiveCharacter().transform;
+        //make sure the camera is always following the character that's currently active
+        target = charSwitcher.activeChar.transform;
         transform.position = new Vector3(target.position.x + offset, transform.position.y, -10);
     }
 }
