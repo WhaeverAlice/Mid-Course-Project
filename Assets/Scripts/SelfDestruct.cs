@@ -6,6 +6,7 @@ public class SelfDestruct : MonoBehaviour
 {
     private void OnEnable()
     {
+        //start countdown to self-destruct
         StartCoroutine(DeleteAfterTime());
     }
 

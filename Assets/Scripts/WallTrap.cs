@@ -13,11 +13,11 @@ public class WallTrap : Trap
     public override void OnTriggerEnter2D(Collider2D other)
     {
         PlayableCharacter player = other.gameObject.GetComponent<PlayableCharacter>();
+        
         //destroy trap if correct active ability on
         if (player.abilityActive && other.CompareTag("BashPlayer"))
         {
             player.abilityActive = false;
-            //method for destroying trap (animation and destroy?)
             this.ApplyDamage();
             audioSource.Play();
             _particleSystem.SetActive(true);
@@ -25,7 +25,7 @@ public class WallTrap : Trap
             //extra score for destroying traps
             player.scoreTracker.IncreaseScore(500);
         }
-        else //take damage from trap if ability is off
+        else //make player take damage from trap if ability is off
         {
             player.ApplyDamage();
         }

@@ -17,7 +17,7 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
     public Animator anim;
     private Color spriteColor;
     protected static int maxHP = 9;
-    public static int currentHP { get; protected set; }
+    public static int currentHP = maxHP;
     public static bool dead = false;
     public bool isJumping = false;
     public bool isSliding = false;
@@ -33,7 +33,6 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
         anim = GetComponent<Animator>();
         rbSprite = GetComponent<SpriteRenderer>();
         spriteColor = rbSprite.color;
-        currentHP = maxHP;
     }
 
     private void OnEnable()

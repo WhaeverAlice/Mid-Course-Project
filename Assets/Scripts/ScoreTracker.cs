@@ -12,16 +12,31 @@ public class ScoreTracker : MonoBehaviour
     [SerializeField] public TMP_Text highScoreTextPause;
     private int currentScore = 0;
 
-
     void Update()
     {
         currentScoreText.text = currentScore.ToString();
         currentScoreTextPause.text = currentScore.ToString();
         highScoreTextPause.text = PlayerPrefs.GetInt("SavedHighScore").ToString();
     }
+    public void IncreaseScore(int byThisMuch)
+    {
+        currentScore += byThisMuch;
 
+        //make score text flash yellow when bonus score is earned
+        if (byThisMuch > 1)
+        {
+            currentScoreText.color = Color.yellow;
+            StartCoroutine(DelayColorReturn());
+        }
+    }
+    IEnumerator DelayColorReturn()
+    {
+        yield return new WaitForSeconds(0.2f);
+        currentScoreText.color = Color.white;
+    }
     public void UpdateHighScore()
     {
+        //updates highscore if current score is higher than current higscore
         if (PlayerPrefs.HasKey("SavedHighScore"))
         {
             if (currentScore > PlayerPrefs.GetInt("SavedHighScore"))
@@ -29,6 +44,7 @@ public class ScoreTracker : MonoBehaviour
                 PlayerPrefs.SetInt("SavedHighScore", currentScore);
             }
         }
+        //if no previous highscore exists, sets new highscore
         else
         {
             PlayerPrefs.SetInt("SavedHighScore", currentScore);
@@ -38,30 +54,14 @@ public class ScoreTracker : MonoBehaviour
         highScoreText.text = PlayerPrefs.GetInt("SavedHighScore").ToString();
     }
 
-    public void OverwriteHighScore()
+    public void OverwriteHighScore() //manually set new highscore
     {
         PlayerPrefs.SetInt("SavedHighScore", currentScore);
         highScoreText.text = PlayerPrefs.GetInt("SavedHighScore").ToString();
     }
 
-    public void IncreaseScore(int byThisMuch)
-    {
-        currentScore += byThisMuch;
-        if (byThisMuch > 1) 
-        {
-            currentScoreText.color = Color.yellow;
-            StartCoroutine(DelayColorReturn());
-        }
-    }
-
     public void ResetCurrentScore()
     {
         currentScore = 0;
-    }
-
-    IEnumerator DelayColorReturn()
-    {
-        yield return new WaitForSeconds(0.2f);
-        currentScoreText.color = Color.white;
     }
 }
