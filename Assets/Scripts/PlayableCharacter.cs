@@ -12,6 +12,7 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
     [SerializeField] private float knockbackDelay;
     [SerializeField] public ScoreTracker scoreTracker;
     [SerializeField] private GameObject gameOverScreen;
+    [SerializeField] private AudioSource voice;
     public Rigidbody2D rb;
     private SpriteRenderer rbSprite;
     public Animator anim;
@@ -114,6 +115,9 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
         //make haracter invulnerable for a couple of seconds
         StartCoroutine(BecomeInvulnerable());
 
+        //play sound
+        voice.Play();
+
         //apply knockback from hit
         ApplyKnockback();
 
@@ -179,6 +183,7 @@ public abstract class PlayableCharacter : MonoBehaviour, IDamageable, IAnimated
     public void resetCharacters() //reset character and score before a new run
     {
         dead = false;
+        currentHP = maxHP;
         scoreTracker.ResetCurrentScore();
     }
 }

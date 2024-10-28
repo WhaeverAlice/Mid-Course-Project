@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class WaterChar : PlayableCharacter
 {
+    [SerializeField] private AudioSource abilityVoice;
     public override void SpecialAbility()
     {
         //play ability animation
         anim.SetTrigger("abilityActive");
+
+        //play voice
+        abilityVoice.Play();
 
         //set active ability on
         abilityActive = true;

@@ -10,13 +10,21 @@ public class ScoreTracker : MonoBehaviour
     [SerializeField] public TMP_Text finalScoreText;
     [SerializeField] public TMP_Text highScoreText;
     [SerializeField] public TMP_Text highScoreTextPause;
+    public bool hardMode;
     private int currentScore = 0;
 
     void Update()
     {
         currentScoreText.text = currentScore.ToString();
         currentScoreTextPause.text = currentScore.ToString();
-        highScoreTextPause.text = PlayerPrefs.GetInt("SavedHighScore").ToString();
+        if (hardMode)
+        {
+            highScoreTextPause.text = PlayerPrefs.GetInt("SavedHighScoreHardMode").ToString();
+        }
+        else
+        {
+            highScoreTextPause.text = PlayerPrefs.GetInt("SavedHighScore").ToString();
+        }
     }
     public void IncreaseScore(int byThisMuch)
     {
@@ -36,30 +44,59 @@ public class ScoreTracker : MonoBehaviour
     }
     public void UpdateHighScore()
     {
-        //updates highscore if current score is higher than current higscore
-        if (PlayerPrefs.HasKey("SavedHighScore"))
+        if (hardMode)
         {
-            if (currentScore > PlayerPrefs.GetInt("SavedHighScore"))
+            //updates highscore if current score is higher than current higscore
+            if (PlayerPrefs.HasKey("SavedHighScoreHardMode"))
+            {
+                if (currentScore > PlayerPrefs.GetInt("SavedHighScoreHardMode"))
+                {
+                    PlayerPrefs.SetInt("SavedHighScoreHardMode", currentScore);
+                }
+            }
+            //if no previous highscore exists, sets new highscore
+            else
+            {
+                PlayerPrefs.SetInt("SavedHighScoreHardMode", currentScore);
+            }
+
+            finalScoreText.text = currentScore.ToString();
+            highScoreText.text = PlayerPrefs.GetInt("SavedHighScoreHardMode").ToString();
+        }
+        else
+        {
+            //updates highscore if current score is higher than current higscore
+            if (PlayerPrefs.HasKey("SavedHighScore"))
+            {
+                if (currentScore > PlayerPrefs.GetInt("SavedHighScore"))
+                {
+                    PlayerPrefs.SetInt("SavedHighScore", currentScore);
+                }
+            }
+            //if no previous highscore exists, sets new highscore
+            else
             {
                 PlayerPrefs.SetInt("SavedHighScore", currentScore);
             }
-        }
-        //if no previous highscore exists, sets new highscore
-        else
-        {
-            PlayerPrefs.SetInt("SavedHighScore", currentScore);
-        }
 
-        finalScoreText.text = currentScore.ToString();
-        highScoreText.text = PlayerPrefs.GetInt("SavedHighScore").ToString();
+            finalScoreText.text = currentScore.ToString();
+            highScoreText.text = PlayerPrefs.GetInt("SavedHighScore").ToString();
+        }
     }
 
     public void OverwriteHighScore() //manually set new highscore
     {
-        PlayerPrefs.SetInt("SavedHighScore", currentScore);
-        highScoreText.text = PlayerPrefs.GetInt("SavedHighScore").ToString();
+        if (hardMode)
+        {
+            PlayerPrefs.SetInt("SavedHighScoreHardMode", currentScore);
+            highScoreText.text = PlayerPrefs.GetInt("SavedHighScoreHardMode").ToString();
+        }
+        else
+        {
+            PlayerPrefs.SetInt("SavedHighScore", currentScore);
+            highScoreText.text = PlayerPrefs.GetInt("SavedHighScore").ToString();
+        }
     }
-
     public void ResetCurrentScore()
     {
         currentScore = 0;
